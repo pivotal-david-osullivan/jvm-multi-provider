@@ -1,0 +1,79 @@
+github:
+  username: ${{ secrets.JAVA_GITHUB_USERNAME }}
+  token:    ${{ secrets.JAVA_GITHUB_TOKEN }}
+
+codeowners:
+- path:  "*"
+  owner: "@paketo-buildpacks/java-buildpacks"
+
+package:
+  repository:     gcr.io/paketo-buildpacks/sap-machine
+  register:       true
+  registry_token: ${{ secrets.JAVA_GITHUB_TOKEN }}
+
+docker_credentials:
+- registry: gcr.io
+  username: _json_key
+  password: ${{ secrets.JAVA_GCLOUD_SERVICE_ACCOUNT_KEY }}
+
+dependencies:
+- name:            JDK 11
+  id:              jdk
+  version_pattern: "11\\.[\\d]+\\.[\\d]+"
+  uses:            docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
+  with:
+    glob:       sapmachine-jdk-.+_linux-x64_bin.tar.gz
+    owner:      SAP
+    repository: SapMachine
+    tag_filter: sapmachine-(11.*)
+    token:      ${{ secrets.JAVA_GITHUB_TOKEN }}
+- name:            JRE 11
+  id:              jre
+  version_pattern: "11\\.[\\d]+\\.[\\d]+"
+  uses:            docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
+  with:
+    glob:       sapmachine-jre-.+_linux-x64_bin.tar.gz
+    owner:      SAP
+    repository: SapMachine
+    tag_filter: sapmachine-(11.*)
+    token:      ${{ secrets.JAVA_GITHUB_TOKEN }}
+- name:            JDK 17
+  id:              jdk
+  version_pattern: "17\\.[\\d]+\\.[\\d]+"
+  uses:            docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
+  with:
+    glob:       sapmachine-jdk-.+_linux-x64_bin.tar.gz
+    owner:      SAP
+    repository: SapMachine
+    tag_filter: sapmachine-(17.*)
+    token:      ${{ secrets.JAVA_GITHUB_TOKEN }}
+- name:            JRE 17
+  id:              jre
+  version_pattern: "17\\.[\\d]+\\.[\\d]+"
+  uses:            docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
+  with:
+    glob:       sapmachine-jre-.+_linux-x64_bin.tar.gz
+    owner:      SAP
+    repository: SapMachine
+    tag_filter: sapmachine-(17.*)
+    token:      ${{ secrets.JAVA_GITHUB_TOKEN }}
+- name:            JDK 18
+  id:              jdk
+  version_pattern: "18\\.[\\d]+\\.[\\d]+"
+  uses:            docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
+  with:
+    glob:       sapmachine-jdk-.+_linux-x64_bin.tar.gz
+    owner:      SAP
+    repository: SapMachine
+    tag_filter: sapmachine-(18.*)
+    token:      ${{ secrets.JAVA_GITHUB_TOKEN }}
+- name:            JRE 18
+  id:              jre
+  version_pattern: "18\\.[\\d]+\\.[\\d]+"
+  uses:            docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
+  with:
+    glob:       sapmachine-jre-.+_linux-x64_bin.tar.gz
+    owner:      SAP
+    repository: SapMachine
+    tag_filter: sapmachine-(18.*)
+    token:      ${{ secrets.JAVA_GITHUB_TOKEN }}

@@ -1,0 +1,220 @@
+# Copyright 2018-2020 the original author or authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+api = "0.7"
+
+[buildpack]
+  description = "A Cloud Native Buildpack that provides the SAP Machine implementations of JREs and JDKs"
+  homepage = "https://github.com/paketo-buildpacks/sap-machine"
+  id = "paketo-buildpacks/sap-machine"
+  keywords = ["java", "jvm", "jre", "jdk"]
+  name = "Paketo SapMachine Buildpack"
+  sbom-formats = ["application/vnd.syft+json", "application/vnd.cyclonedx+json"]
+  version = "{{.version}}"
+
+  [[buildpack.licenses]]
+    type = "Apache-2.0"
+    uri = "https://github.com/paketo-buildpacks/sap-machine/blob/main/LICENSE"
+
+[metadata]
+  include-files = ["LICENSE", "NOTICE", "README.md", "bin/build", "bin/detect", "bin/helper", "bin/main", "buildpack.toml"]
+  pre-package = "scripts/build.sh"
+
+  [[metadata.configurations]]
+    default = "0"
+    description = "the headroom in memory calculation"
+    launch = true
+    name = "BPL_JVM_HEAD_ROOM"
+
+  [[metadata.configurations]]
+    default = "35% of classes"
+    description = "the number of loaded classes in memory calculation"
+    launch = true
+    name = "BPL_JVM_LOADED_CLASS_COUNT"
+
+  [[metadata.configurations]]
+    default = "250"
+    description = "the number of threads in memory calculation"
+    launch = true
+    name = "BPL_JVM_THREAD_COUNT"
+
+  [[metadata.configurations]]
+    default = ""
+    description = "write heap dumps on error to this path"
+    launch = true
+    name = "BPL_HEAP_DUMP_PATH"
+
+  [[metadata.configurations]]
+    default = "true"
+    description = "enables Java Native Memory Tracking (NMT)"
+    launch = true
+    name = "BPL_JAVA_NMT_ENABLED"
+
+  [[metadata.configurations]]
+    default = "summary"
+    description = "configure level of NMT, summary or detail"
+    launch = true
+    name = "BPL_JAVA_NMT_LEVEL"
+
+  [[metadata.configurations]]
+    default = "false"
+    description = "enables Java Management Extensions (JMX)"
+    launch = true
+    name = "BPL_JMX_ENABLED"
+
+  [[metadata.configurations]]
+    default = "5000"
+    description = "configure the JMX port"
+    launch = true
+    name = "BPL_JMX_PORT"
+
+  [[metadata.configurations]]
+    default = "false"
+    description = "enables Java remote debugging support"
+    launch = true
+    name = "BPL_DEBUG_ENABLED"
+
+  [[metadata.configurations]]
+    default = "8000"
+    description = "configure the remote debugging port"
+    launch = true
+    name = "BPL_DEBUG_PORT"
+
+  [[metadata.configurations]]
+    default = "false"
+    description = "configure whether to suspend execution until a debugger has attached"
+    launch = true
+    name = "BPL_DEBUG_SUSPEND"
+
+  [[metadata.configurations]]
+    default = "false"
+    description = "enables Java Flight Recording (JFR)"
+    launch = true
+    name = "BPL_JFR_ENABLED"
+
+  [[metadata.configurations]]
+    default = ""
+    description = "configure custom Java Flight Recording (JFR) arguments"
+    launch = true
+    name = "BPL_JFR_ARGS"
+
+  [[metadata.configurations]]
+    build = true
+    default = "11"
+    description = "the Java version"
+    name = "BP_JVM_VERSION"
+
+  [[metadata.configurations]]
+    build = true
+    default = "JRE"
+    description = "the JVM type - JDK or JRE"
+    name = "BP_JVM_TYPE"
+
+  [[metadata.configurations]]
+    description = "the JVM launch flags"
+    launch = true
+    name = "JAVA_TOOL_OPTIONS"
+
+  [[metadata.dependencies]]
+    cpes = ["cpe:2.3:a:oracle:jdk:11.0.15:*:*:*:*:*:*:*"]
+    id = "jdk"
+    name = "SapMachine JDK"
+    purl = "pkg:generic/sap-machine-jdk@11.0.15?arch=amd64"
+    sha256 = "131418908bda1ff30679bb273db42fa30e1bdf73c64ba812aa8353a754feecf2"
+    stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*"]
+    uri = "https://github.com/SAP/SapMachine/releases/download/sapmachine-11.0.15/sapmachine-jdk-11.0.15_linux-x64_bin.tar.gz"
+    version = "11.0.15"
+
+    [[metadata.dependencies.licenses]]
+      type = "GPL-2.0 WITH Classpath-exception-2.0"
+      uri = "https://openjdk.java.net/legal/gplv2+ce.html"
+
+  [[metadata.dependencies]]
+    cpes = ["cpe:2.3:a:oracle:jre:11.0.15:*:*:*:*:*:*:*"]
+    id = "jre"
+    name = "SapMachine JRE"
+    purl = "pkg:generic/sap-machine-jre@11.0.15?arch=amd64"
+    sha256 = "19f82309d3cdc9fdded952fa224de57c96b023dba8d9a75cf91a86c983d011b2"
+    stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*"]
+    uri = "https://github.com/SAP/SapMachine/releases/download/sapmachine-11.0.15/sapmachine-jre-11.0.15_linux-x64_bin.tar.gz"
+    version = "11.0.15"
+
+    [[metadata.dependencies.licenses]]
+      type = "GPL-2.0 WITH Classpath-exception-2.0"
+      uri = "https://openjdk.java.net/legal/gplv2+ce.html"
+
+  [[metadata.dependencies]]
+    cpes = ["cpe:2.3:a:oracle:jdk:17.0.3:*:*:*:*:*:*:*"]
+    id = "jdk"
+    name = "SapMachine JDK"
+    purl = "pkg:generic/sap-machine-jdk@17.0.3?arch=amd64"
+    sha256 = "3aa649ffef0d21b98019bbfae6591d54438c76571614e9b328e6021a493d07f0"
+    stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*"]
+    uri = "https://github.com/SAP/SapMachine/releases/download/sapmachine-17.0.3/sapmachine-jdk-17.0.3_linux-x64_bin.tar.gz"
+    version = "17.0.3"
+
+    [[metadata.dependencies.licenses]]
+      type = "GPL-2.0 WITH Classpath-exception-2.0"
+      uri = "https://openjdk.java.net/legal/gplv2+ce.html"
+
+  [[metadata.dependencies]]
+    cpes = ["cpe:2.3:a:oracle:jre:17.0.3:*:*:*:*:*:*:*"]
+    id = "jre"
+    name = "SapMachine JRE"
+    purl = "pkg:generic/sap-machine-jre@17.0.3?arch=amd64"
+    sha256 = "49cfdb77922dc659b9d517a74a398a899dc5c3362644b4f3dae0b17f34ae4e58"
+    stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*"]
+    uri = "https://github.com/SAP/SapMachine/releases/download/sapmachine-17.0.3/sapmachine-jre-17.0.3_linux-x64_bin.tar.gz"
+    version = "17.0.3"
+
+    [[metadata.dependencies.licenses]]
+      type = "GPL-2.0 WITH Classpath-exception-2.0"
+      uri = "https://openjdk.java.net/legal/gplv2+ce.html"
+
+  [[metadata.dependencies]]
+    cpes = ["cpe:2.3:a:oracle:jdk:18.0.1:*:*:*:*:*:*:*"]
+    id = "jdk"
+    name = "SapMachine JDK"
+    purl = "pkg:generic/sap-machine-jdk@18.0.1?arch=amd64"
+    sha256 = "574be15adb877bcc91894468868ae4f34c56e45bd56f201f30a04a6c321e42bd"
+    stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*"]
+    uri = "https://github.com/SAP/SapMachine/releases/download/sapmachine-18.0.1/sapmachine-jdk-18.0.1_linux-x64_bin.tar.gz"
+    version = "18.0.1"
+
+    [[metadata.dependencies.licenses]]
+      type = "GPL-2.0 WITH Classpath-exception-2.0"
+      uri = "https://openjdk.java.net/legal/gplv2+ce.html"
+
+  [[metadata.dependencies]]
+    cpes = ["cpe:2.3:a:oracle:jre:18.0.1:*:*:*:*:*:*:*"]
+    id = "jre"
+    name = "SapMachine JRE"
+    purl = "pkg:generic/sap-machine-jre@18.0.1?arch=amd64"
+    sha256 = "8d7e853bc0b770559586c1cbd4106fa2f70de841d6b289f9b209eccbb26925ba"
+    stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*"]
+    uri = "https://github.com/SAP/SapMachine/releases/download/sapmachine-18.0.1/sapmachine-jre-18.0.1_linux-x64_bin.tar.gz"
+    version = "18.0.1"
+
+    [[metadata.dependencies.licenses]]
+      type = "GPL-2.0 WITH Classpath-exception-2.0"
+      uri = "https://openjdk.java.net/legal/gplv2+ce.html"
+
+[[stacks]]
+  id = "io.buildpacks.stacks.bionic"
+
+[[stacks]]
+  id = "io.paketo.stacks.tiny"
+
+[[stacks]]
+  id = "*"
